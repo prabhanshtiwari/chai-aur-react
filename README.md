@@ -5,7 +5,7 @@
 ### `#ChaiAurReact` — Placement-Oriented Learning Journey
 
 [![Playlist](https://img.shields.io/badge/YouTube-Chai%20Aur%20React-red?style=for-the-badge&logo=youtube)](https://www.youtube.com/@chaiaurcode)
-[![Progress](https://img.shields.io/badge/Progress-1%2F35-blue?style=for-the-badge)](.)
+[![Progress](https://img.shields.io/badge/Progress-2%2F35-blue?style=for-the-badge)](.)
 [![Started](https://img.shields.io/badge/Started-15%20March%202026-green?style=for-the-badge)](.)
 [![Status](https://img.shields.io/badge/Status-In%20Progress-orange?style=for-the-badge)](.)
 
@@ -25,15 +25,15 @@ Complete **35 lectures** in **35 days** (starting 15 March 2026) — going from 
 ## 📊 Progress Tracker
 
 ```
-██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  1 / 35 lectures (2.8%)
+████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  2 / 35 lectures (5.7%)
 ```
 
 | Metric | Value |
 |--------|-------|
 | 🗓️ Start Date | 15 March 2026 |
 | 🏁 Target End | 18 April 2026 |
-| ✅ Completed | 1 |
-| 📚 Remaining | 34 |
+| ✅ Completed | 2 |
+| 📚 Remaining | 33 |
 | 🔥 Current Streak | 1 day |
 
 ---
@@ -45,8 +45,8 @@ Complete **35 lectures** in **35 days** (starting 15 March 2026) — going from 
 
 | # | Lecture | Date | Status | Notes |
 |---|---------|------|--------|-------|
-| 01 | [React JS Roadmap](https://youtube.com/@chaiaurcode) | 15 Mar 2026 | ✅ Done | |
-| 02 | Create React Projects | 16 Mar 2026 | ⬜ Pending | |
+| 01 | [React JS Roadmap](https://youtube.com/@chaiaurcode) | 15 Mar 2026 | ✅ Done | React = UI library; CRA vs Vite; npm vs npx |
+| 02 | Create React Projects | 15 Mar 2026 | ✅ Done | CRA & Vite setup; project cleanup; build vs src |
 | 03 | Understand the React Flow and Structure | 17 Mar 2026 | ⬜ Pending | |
 | 04 | Create Your Own React Library and JSX | 18 Mar 2026 | ⬜ Pending | |
 | 05 | Why You Need Hooks and Project 06 | 19 Mar 2026 | ⬜ Pending | |
@@ -118,7 +118,7 @@ Complete **35 lectures** in **35 days** (starting 15 March 2026) — going from 
 ## 🧠 Key Concepts Checklist (Placement Focus)
 
 ### Core React
-- [ ] JSX and how Babel transforms it
+- [x] JSX and how Babel transforms it
 - [ ] Virtual DOM vs Real DOM — explain in interviews
 - [ ] React Fiber and reconciliation algorithm
 - [ ] Component lifecycle (functional with hooks)
@@ -165,14 +165,111 @@ Complete **35 lectures** in **35 days** (starting 15 March 2026) — going from 
 ## 📝 Daily Notes Log
 
 <details>
-<summary><b>Day 01 — React JS Roadmap (15 Mar 2026)</b></summary>
+<summary><b>Day 01 — React JS Roadmap + Create React Projects (15 Mar 2026) ✅</b></summary>
 
-> Add your notes, key takeaways, and any doubts here.
+### Lecture 01 — React JS Roadmap
+
+**Requirements:** VS Code, Node.js, Browser
+
+**React ecosystem:**
+- React docs → [react.dev](https://react.dev)
+- Bundlers: Vite, Parcel
+- React + React DOM → Web Apps
+- React + React Native → Mobile Apps
+- `npm` = package manager | `npx` = execute without global install
+
+---
+
+### Lecture 02 — Create React Projects
+
+#### Method 1: Create React App (CRA)
+```bash
+npx create-react-app 01basicreact
+npm run start
+```
+- **Slower** and **bulkier** setup
+- `package.json` contains: name, version, dependencies (`react`, `react-dom`), testing libs (`jest-dom`, `user-event`), `react-scripts`, `web-vitals`, `browserlist`
+- Scripts: `start` (dev), `build` (production bundle), `test`, `eject`
+- `index.html` has just `<div id="root"></div>` — React mounts here
+- `npm run build` → generates `build/` folder (served in production, not `src/`)
+
+**Cleaning CRA project — delete:**
+```
+setupTest.js · reportWebVitals.js · logo.svg · App.test.js · App.css · index.css
+```
+
+**Minimal `App.js`:**
+```js
+function App() {
+  return <h1>Chai aur React</h1>;
+}
+export default App;
+```
+
+**Minimal `index.js`:**
+```js
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<React.StrictMode><App /></React.StrictMode>);
+```
+
+---
+
+#### Method 2: Vite (Recommended)
+```bash
+npm create vite@latest
+cd 01vitereact
+npm install
+npm run dev
+```
+- Faster, leaner, modern approach
+- Uses `.jsx` extension (vs `.js` in CRA)
+- Dev command is `npm run dev` (not `npm run start`)
+
+**Cleaning Vite project — delete:**
+```
+assets/ · App.css · index.css
+```
+
+**Minimal `main.jsx`:**
+```jsx
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import App from './App.jsx'
+
+createRoot(document.getElementById('root')).render(
+  <StrictMode><App /></StrictMode>
+)
+```
+
+**Minimal `App.jsx`:**
+```jsx
+function App() {
+  return <h1>Chai aur React with Vite</h1>
+}
+export default App
+```
+
+---
+
+#### CRA vs Vite — Quick Ref
+
+| | CRA | Vite |
+|--|-----|------|
+| Speed | Slow | Fast |
+| Extension | `.js` | `.jsx` |
+| Dev command | `npm run start` | `npm run dev` |
+| Build output | `build/` | `dist/` |
+
+**Key takeaway:** Most work happens in `src/`. Production serves the build folder, not `src/`.
 
 </details>
 
 <details>
-<summary><b>Day 02 — Create React Projects (16 Mar 2026)</b></summary>
+<summary><b>Day 02 — Understand the React Flow and Structure (16 Mar 2026)</b></summary>
 
 > Add your notes here after completing the lecture.
 
