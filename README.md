@@ -5,7 +5,7 @@
 ### `#ChaiAurReact` — Placement-Oriented Learning Journey
 
 [![Playlist](https://img.shields.io/badge/YouTube-Chai%20Aur%20React-red?style=for-the-badge&logo=youtube)](https://www.youtube.com/@chaiaurcode)
-[![Progress](https://img.shields.io/badge/Progress-2%2F35-blue?style=for-the-badge)](.)
+[![Progress](https://img.shields.io/badge/Progress-3%2F35-blue?style=for-the-badge)](.)
 [![Started](https://img.shields.io/badge/Started-15%20March%202026-green?style=for-the-badge)](.)
 [![Status](https://img.shields.io/badge/Status-In%20Progress-orange?style=for-the-badge)](.)
 
@@ -25,15 +25,15 @@ Complete **35 lectures** in **35 days** (starting 15 March 2026) — going from 
 ## 📊 Progress Tracker
 
 ```
-████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  2 / 35 lectures (5.7%)
+█████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  3 / 35 lectures (8.6%)
 ```
 
 | Metric | Value |
 |--------|-------|
 | 🗓️ Start Date | 15 March 2026 |
 | 🏁 Target End | 18 April 2026 |
-| ✅ Completed | 2 |
-| 📚 Remaining | 33 |
+| ✅ Completed | 3 |
+| 📚 Remaining | 32 |
 | 🔥 Current Streak | 1 day |
 
 ---
@@ -47,7 +47,7 @@ Complete **35 lectures** in **35 days** (starting 15 March 2026) — going from 
 |---|---------|------|--------|-------|
 | 01 | [React JS Roadmap](https://youtube.com/@chaiaurcode) | 15 Mar 2026 | ✅ Done | React = UI library; CRA vs Vite; npm vs npx |
 | 02 | Create React Projects | 15 Mar 2026 | ✅ Done | CRA & Vite setup; project cleanup; build vs src |
-| 03 | Understand the React Flow and Structure | 17 Mar 2026 | ⬜ Pending | |
+| 03 | Understand the React Flow and Structure | 15 Mar 2026 | ✅ Done | |
 | 04 | Create Your Own React Library and JSX | 18 Mar 2026 | ⬜ Pending | |
 | 05 | Why You Need Hooks and Project 06 | 19 Mar 2026 | ⬜ Pending | |
 | 06 | Virtual DOM, Fibre and Reconciliation | 20 Mar 2026 | ⬜ Pending | |
@@ -269,7 +269,14 @@ export default App
 </details>
 
 <details>
-<summary><b>Day 02 — Understand the React Flow and Structure (16 Mar 2026)</b></summary>
+<summary><b>Day 01 — Understand the React Flow and Structure — Lec 03 (15 Mar 2026) ✅</b></summary>
+
+> Add your notes here for Lecture 03.
+
+</details>
+
+<details>
+<summary><b>Day 02 — (16 Mar 2026)</b></summary>
 
 > Add your notes here after completing the lecture.
 
