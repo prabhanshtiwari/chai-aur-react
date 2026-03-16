@@ -5,7 +5,7 @@
 ### `#ChaiAurReact` — Placement-Oriented Learning Journey
 
 [![Playlist](https://img.shields.io/badge/YouTube-Chai%20Aur%20React-red?style=for-the-badge&logo=youtube)](https://www.youtube.com/@chaiaurcode)
-[![Progress](https://img.shields.io/badge/Progress-3%2F35-blue?style=for-the-badge)](.)
+[![Progress](https://img.shields.io/badge/Progress-7%2F35-blue?style=for-the-badge)](.)
 [![Started](https://img.shields.io/badge/Started-15%20March%202026-green?style=for-the-badge)](.)
 [![Status](https://img.shields.io/badge/Status-In%20Progress-orange?style=for-the-badge)](.)
 
@@ -25,16 +25,16 @@ Complete **35 lectures** in **35 days** (starting 15 March 2026) — going from 
 ## 📊 Progress Tracker
 
 ```
-█████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  3 / 35 lectures (8.6%)
+████████████░░░░░░░░░░░░░░░░░░░░░░░  7 / 35 lectures (20%)
 ```
 
 | Metric | Value |
 |--------|-------|
 | 🗓️ Start Date | 15 March 2026 |
 | 🏁 Target End | 18 April 2026 |
-| ✅ Completed | 3 |
-| 📚 Remaining | 32 |
-| 🔥 Current Streak | 1 day |
+| ✅ Completed | 7 |
+| 📚 Remaining | 28 |
+| 🔥 Current Streak | 2 days |
 
 ---
 
@@ -48,10 +48,10 @@ Complete **35 lectures** in **35 days** (starting 15 March 2026) — going from 
 | 01 | [React JS Roadmap](https://youtube.com/@chaiaurcode) | 15 Mar 2026 | ✅ Done | React = UI library; CRA vs Vite; npm vs npx |
 | 02 | Create React Projects | 15 Mar 2026 | ✅ Done | CRA & Vite setup; project cleanup; build vs src |
 | 03 | Understand the React Flow and Structure | 15 Mar 2026 | ✅ Done | |
-| 04 | Create Your Own React Library and JSX | 18 Mar 2026 | ⬜ Pending | |
-| 05 | Why You Need Hooks and Project 06 | 19 Mar 2026 | ⬜ Pending | |
-| 06 | Virtual DOM, Fibre and Reconciliation | 20 Mar 2026 | ⬜ Pending | |
-| 07 | Tailwind and Props in ReactJS | 21 Mar 2026 | ⬜ Pending | |
+| 04 | Create Your Own React Library and JSX | 16 Mar 2026 | ✅ Done | |
+| 05 | Why You Need Hooks and Project 06 | 16 Mar 2026 | ✅ Done | |
+| 06 | Virtual DOM, Fibre and Reconciliation | 16 Mar 2026 | ✅ Done | |
+| 07 | Tailwind and Props in ReactJS | 16 Mar 2026 | ✅ Done | |
 
 ---
 
@@ -60,12 +60,12 @@ Complete **35 lectures** in **35 days** (starting 15 March 2026) — going from 
 
 | # | Lecture | Date | Status | Notes |
 |---|---------|------|--------|-------|
-| 08 | A React Interview Question on Counter | 22 Mar 2026 | ⬜ Pending | |
-| 09 | Building a React Project — bgChanger | 23 Mar 2026 | ⬜ Pending | |
-| 10 | useEffect, useRef and useCallback with 1 Project | 24 Mar 2026 | ⬜ Pending | |
-| 11 | Custom Hooks in React — Currency Project | 25 Mar 2026 | ⬜ Pending | |
-| 12 | React Router Crash Course | 26 Mar 2026 | ⬜ Pending | |
-| 13 | Context API Crash Course with 2 Projects | 27 Mar 2026 | ⬜ Pending | |
+| 08 | A React Interview Question on Counter | 17 Mar 2026 | ⬜ Pending | |
+| 09 | Building a React Project — bgChanger | 18 Mar 2026 | ⬜ Pending | |
+| 10 | useEffect, useRef and useCallback with 1 Project | 19 Mar 2026 | ⬜ Pending | |
+| 11 | Custom Hooks in React — Currency Project | 20 Mar 2026 | ⬜ Pending | |
+| 12 | React Router Crash Course | 21 Mar 2026 | ⬜ Pending | |
+| 13 | Context API Crash Course with 2 Projects | 22 Mar 2026 | ⬜ Pending | |
 
 ---
 
@@ -74,13 +74,13 @@ Complete **35 lectures** in **35 days** (starting 15 March 2026) — going from 
 
 | # | Lecture | Date | Status | Notes |
 |---|---------|------|--------|-------|
-| 14 | Context API with Local Storage — Project | 28 Mar 2026 | ⬜ Pending | |
-| 15 | Redux Toolkit Crash Course | 29 Mar 2026 | ⬜ Pending | |
-| 16 | What is Your Choice for Mega Project in React? | 30 Mar 2026 | ⬜ Pending | |
-| 17 | Our Mega Project in React — The Hard Way | 31 Mar 2026 | ⬜ Pending | |
-| 18 | Appwrite Backend for React Project | 1 Apr 2026 | ⬜ Pending | |
-| 19 | ENV and Appwrite in React Project | 2 Apr 2026 | ⬜ Pending | |
-| 20 | Build Authentication Service with Appwrite | 3 Apr 2026 | ⬜ Pending | |
+| 14 | Context API with Local Storage — Project | 23 Mar 2026 | ⬜ Pending | |
+| 15 | Redux Toolkit Crash Course | 24 Mar 2026 | ⬜ Pending | |
+| 16 | What is Your Choice for Mega Project in React? | 25 Mar 2026 | ⬜ Pending | |
+| 17 | Our Mega Project in React — The Hard Way | 26 Mar 2026 | ⬜ Pending | |
+| 18 | Appwrite Backend for React Project | 27 Mar 2026 | ⬜ Pending | |
+| 19 | ENV and Appwrite in React Project | 28 Mar 2026 | ⬜ Pending | |
+| 20 | Build Authentication Service with Appwrite | 29 Mar 2026 | ⬜ Pending | |
 
 ---
 
@@ -89,14 +89,14 @@ Complete **35 lectures** in **35 days** (starting 15 March 2026) — going from 
 
 | # | Lecture | Date | Status | Notes |
 |---|---------|------|--------|-------|
-| 21 | Appwrite Database, File Upload and Custom Queries | 4 Apr 2026 | ⬜ Pending | |
-| 22 | How to Configure Redux Toolkit in Big Projects | 5 Apr 2026 | ⬜ Pending | |
-| 23 | Production Grade React Components | 6 Apr 2026 | ⬜ Pending | |
-| 24 | How to Use React Hook Form in Production | 7 Apr 2026 | ⬜ Pending | |
-| 25 | Adding Form and Slug Values | 8 Apr 2026 | ⬜ Pending | |
-| 26 | Building Pages — Chai aur React | 9 Apr 2026 | ⬜ Pending | |
-| 27 | CORS and Debugging in React Project | 10 Apr 2026 | ⬜ Pending | |
-| 28 | How to Deploy React App to Production | 11 Apr 2026 | ⬜ Pending | |
+| 21 | Appwrite Database, File Upload and Custom Queries | 30 Mar 2026 | ⬜ Pending | |
+| 22 | How to Configure Redux Toolkit in Big Projects | 31 Mar 2026 | ⬜ Pending | |
+| 23 | Production Grade React Components | 1 Apr 2026 | ⬜ Pending | |
+| 24 | How to Use React Hook Form in Production | 2 Apr 2026 | ⬜ Pending | |
+| 25 | Adding Form and Slug Values | 3 Apr 2026 | ⬜ Pending | |
+| 26 | Building Pages — Chai aur React | 4 Apr 2026 | ⬜ Pending | |
+| 27 | CORS and Debugging in React Project | 5 Apr 2026 | ⬜ Pending | |
+| 28 | How to Deploy React App to Production | 6 Apr 2026 | ⬜ Pending | |
 
 ---
 
@@ -105,13 +105,13 @@ Complete **35 lectures** in **35 days** (starting 15 March 2026) — going from 
 
 | # | Lecture | Date | Status | Notes |
 |---|---------|------|--------|-------|
-| 29 | Assignments for Your React Course | 12 Apr 2026 | ⬜ Pending | |
-| 30 | React Series Ends Here | 13 Apr 2026 | ⬜ Pending | |
-| 31 | How to Connect Frontend and Backend — Fullstack Proxy and CORS | 14 Apr 2026 | ⬜ Pending | |
-| 32 | You Don't Need State for This — React Interview Question | 15 Apr 2026 | ⬜ Pending | |
-| 33 | Testing Your Datatype Skills in React Interviews | 16 Apr 2026 | ⬜ Pending | |
-| 34 | Handle APIs Like a Pro — Custom React Query, Axios, Race Condition | 17 Apr 2026 | ⬜ Pending | |
-| 35 | A Common Production Mistake in React | 18 Apr 2026 | ⬜ Pending | |
+| 29 | Assignments for Your React Course | 7 Apr 2026 | ⬜ Pending | |
+| 30 | React Series Ends Here | 8 Apr 2026 | ⬜ Pending | |
+| 31 | How to Connect Frontend and Backend — Fullstack Proxy and CORS | 9 Apr 2026 | ⬜ Pending | |
+| 32 | You Don't Need State for This — React Interview Question | 10 Apr 2026 | ⬜ Pending | |
+| 33 | Testing Your Datatype Skills in React Interviews | 11 Apr 2026 | ⬜ Pending | |
+| 34 | Handle APIs Like a Pro — Custom React Query, Axios, Race Condition | 12 Apr 2026 | ⬜ Pending | |
+| 35 | A Common Production Mistake in React | 13 Apr 2026 | ⬜ Pending | |
 
 ---
 
@@ -119,12 +119,12 @@ Complete **35 lectures** in **35 days** (starting 15 March 2026) — going from 
 
 ### Core React
 - [x] JSX and how Babel transforms it
-- [ ] Virtual DOM vs Real DOM — explain in interviews
-- [ ] React Fiber and reconciliation algorithm
+- [x] Virtual DOM vs Real DOM — explain in interviews
+- [x] React Fiber and reconciliation algorithm
 - [ ] Component lifecycle (functional with hooks)
 
 ### Hooks (Most Asked in Interviews)
-- [ ] `useState` — state management
+- [x] `useState` — state management
 - [ ] `useEffect` — side effects, cleanup
 - [ ] `useRef` — DOM access, persisting values
 - [ ] `useCallback` — memoizing functions
@@ -276,7 +276,34 @@ export default App
 </details>
 
 <details>
-<summary><b>Day 02 — (16 Mar 2026)</b></summary>
+<summary><b>Day 02 — Lec 04–07 (16 Mar 2026) ✅</b></summary>
+
+### Lecture 04 — Create Your Own React Library and JSX
+
+> Add your notes here.
+
+---
+
+### Lecture 05 — Why You Need Hooks and Project 06
+
+> Add your notes here.
+
+---
+
+### Lecture 06 — Virtual DOM, Fibre and Reconciliation
+
+> Add your notes here.
+
+---
+
+### Lecture 07 — Tailwind and Props in ReactJS
+
+> Add your notes here.
+
+</details>
+
+<details>
+<summary><b>Day 03 — (17 Mar 2026)</b></summary>
 
 > Add your notes here after completing the lecture.
 
@@ -300,7 +327,7 @@ export default App
 
 ## 🏆 Milestones
 
-- [ ] 🌱 **Day 7** — React fundamentals solid
+- [x] 🌱 **Day 7** — React fundamentals solid
 - [ ] ⚡ **Day 13** — Hooks mastered
 - [ ] 🔧 **Day 20** — State management confident
 - [ ] 🚀 **Day 28** — Production-grade skills unlocked
