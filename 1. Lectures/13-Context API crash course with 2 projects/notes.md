@@ -1,4 +1,843 @@
-Transcript:
+# React Context API — Complete Notes
+
+---
+
+## 1. The Problem: Prop Drilling
+
+When you build a React app, data flows **from parent to child** via **props**. This works fine for simple structures, but becomes messy when data needs to travel through many layers.
+
+### Example: Admin Dashboard
+
+Imagine this component tree:
+
+```
+App
+ └── Dashboard
+      ├── LeftSidebar
+      └── RightSidebar
+           ├── TopSection
+           │    └── Card  ← needs username
+           └── BottomSection
+```
+
+If `username` lives in `App`, you must pass it as a prop through every layer — even through `Dashboard`, `RightSidebar`, and `TopSection` — even though **they don't use it**. They just relay it forward.
+
+```
+App → Dashboard → RightSidebar → TopSection → Card
+         (just passing it along, no actual use)
+```
+
+This unnecessary passing of props through intermediate components is called **Prop Drilling**.
+
+**Problems with prop drilling:**
+- Components receive props they don't actually use
+- Code becomes messy and hard to maintain
+- Any structural change requires updating multiple files
+
+---
+
+## 2. The Solution: A Global Object
+
+What if there was a **global object** that any component could access directly?
+
+```js
+// Imagine this global object
+{
+    username: "hitesh"
+}
+```
+
+Instead of passing `username` through 4 levels, `Card` could just reach into this global object and grab the value it needs.
+
+This is exactly what **Context API** solves.
+
+---
+
+## 3. What is Context API?
+
+- Context API is **built into React** — no extra installation needed.
+- It lets you create a **global store** of data that any component in your app can access directly.
+- It solves the prop drilling problem in an organized, React-friendly way.
+
+> **Why not just use a global JS variable?**  
+> You could create a `globals.js` file with plain variables, but React wouldn't know when they change. Components wouldn't re-render. Context API integrates with React's state system so updates trigger proper re-renders.
+
+---
+
+## 4. Other State Management Solutions
+
+Context API is not the only solution. Since prop drilling is a general problem (not React-specific), other libraries also solve it:
+
+| Tool | Notes |
+|---|---|
+| **Context API** | Built into React, great for simple/medium needs |
+| **Redux** | Standalone state management library |
+| **React-Redux** | Redux adapted for React |
+| **Redux Toolkit (RTK)** | Easier, modern version of Redux — most used today |
+| **Zustand** | Lightweight, simple alternative |
+
+> Once you understand Context API, Redux and Zustand become much easier to learn.
+
+---
+
+## 5. Project: 08miniContext
+
+We'll build a mini project to understand Context API step by step.
+
+**What we're building:**
+- A `Login` component that **sends** data to the context
+- A `Profile` component that **reads** data from the context
+
+---
+
+## 6. Folder Structure
+
+```
+src/
+├── context/
+│   ├── UserContext.js          ← Creates the context
+│   └── UserContextProvider.jsx ← Provides data to the app
+├── components/
+│   ├── Login.jsx               ← Sends data into context
+│   └── Profile.jsx             ← Reads data from context
+└── App.jsx                     ← Wires everything together
+```
+
+---
+
+## 7. Step 1: Create the Context — `UserContext.js`
+
+This file **creates** the context object. Think of it as declaring your global store.
+
+```js
+// src/context/UserContext.js
+
+import React from "react";
+
+// React.createContext() creates a new Context object
+// This is like declaring: "I want a global variable called UserContext"
+const UserContext = React.createContext();
+
+export default UserContext;
+```
+
+**Key points:**
+- `React.createContext()` is a method, just like `useState`
+- It returns a context object — store it in a variable
+- Export it so other files can use it
+
+---
+
+## 8. Step 2: Create the Provider — `UserContextProvider.jsx`
+
+Every context needs a **Provider** — a wrapper component that:
+1. Holds the actual data (state)
+2. Makes that data available to all wrapped components
+
+```jsx
+// src/context/UserContextProvider.jsx
+
+import React, { useState } from 'react'
+import UserContext from './UserContext'
+
+// This is a normal React component that wraps your app (or part of it)
+// { children } refers to whatever components are placed inside this wrapper
+const UserContextProvider = ({ children }) => {
+
+    // This is where you store your global data
+    // You can also make API calls here and store the result
+    const [user, setUser] = useState(null);
+
+    return (
+        // UserContext.Provider is what actually "provides" data
+        // The `value` prop is the data you want to share globally
+        // Any component inside this wrapper can access { user, setUser }
+        <UserContext.Provider value={{ user, setUser }}>
+            {children}  {/* Renders whatever is wrapped inside this component */}
+        </UserContext.Provider>
+    )
+}
+
+export default UserContextProvider;
+```
+
+**Key points:**
+- Every context object comes with a `.Provider` property
+- The `value` prop on `.Provider` is what gets shared — pass anything here
+- `children` is a special prop that represents all nested components
+- You can share both data (`user`) and updater functions (`setUser`) via `value`
+
+---
+
+## 9. Step 3: Wrap Your App — `App.jsx`
+
+Wrap your component tree with `UserContextProvider`. Any component inside it can now access the context.
+
+```jsx
+// src/App.jsx
+
+import Login from "./components/Login"
+import Profile from "./components/Profile"
+import UserContextProvider from "./context/UserContextProvider"
+
+function App() {
+  return (
+    // Wrap everything inside UserContextProvider
+    // Now Login and Profile (and any nested components) can access the context
+    <UserContextProvider>
+      <h1>Context API</h1>
+      <Login />
+      <Profile />
+    </UserContextProvider>
+  )
+}
+
+export default App
+```
+
+**Key points:**
+- Wrap at the highest level where you need the data
+- You don't need to pass any props — the context handles it
+- Multiple contexts can be nested if needed
+
+---
+
+## 10. Step 4: Send Data to Context — `Login.jsx`
+
+This component **writes** to the context using the `setUser` function.
+
+```jsx
+// src/components/Login.jsx
+
+import React, { useState, useContext } from 'react'
+import UserContext from '../context/UserContext'
+
+function Login() {
+
+    // Local state for the input fields
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+
+    // useContext hook: give it your context object, get back the value
+    // We only destructure setUser because Login just SENDS data
+    const { setUser } = useContext(UserContext);
+
+    const handleSubmit = (e) => {
+        e.preventDefault(); // Prevent default form submission (URL params / page reload)
+
+        // Send the username and password into the global context
+        setUser({ username, password });
+    }
+
+    return (
+        <div>
+            <h2>Login</h2>
+            {/* Controlled input: value tied to state, onChange updates state */}
+            <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="username"
+            />
+            {" "} {/* Non-breaking space for spacing between inputs */}
+            <input
+                type="text"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="password"
+            />
+            <button onClick={handleSubmit}>Submit</button>
+        </div>
+    )
+}
+
+export default Login
+```
+
+**Key points:**
+- `useContext(UserContext)` gives you access to everything in the `value` prop
+- You can destructure only what you need — here just `setUser`
+- Calling `setUser({ username, password })` updates the global context
+- All components using this context will automatically re-render with new data
+
+---
+
+## 11. Step 5: Read Data from Context — `Profile.jsx`
+
+This component **reads** from the context using the `user` value.
+
+```jsx
+// src/components/Profile.jsx
+
+import React, { useContext } from 'react'
+import UserContext from '../context/UserContext'
+
+function Profile() {
+
+    // We only destructure `user` because Profile just READS data
+    const { user } = useContext(UserContext);
+
+    // If no user is logged in (user is null), show a message
+    // This early return pattern avoids nesting the whole component in an if-else
+    if (!user) {
+        return (
+            <div>Please Login</div>
+        )
+    }
+
+    // If user exists, show their details
+    return (
+        <>
+            <div>Welcome {user.username}</div>
+            <div>Password {user.password}</div>
+        </>
+    )
+}
+
+export default Profile
+```
+
+**Key points:**
+- `useContext(UserContext)` returns whatever is in the `value` prop of the Provider
+- Destructure only what you need — here just `user`
+- The early `return` pattern is clean and idiomatic React — if `user` is null, nothing below that line runs
+- This component has **no props** passed to it, yet it knows about the user — that's the power of Context
+
+---
+
+## 12. How It All Connects
+
+```
+UserContextProvider
+    └── holds: [user, setUser] via useState
+    └── shares: { user, setUser } via Context.Provider value
+
+Login.jsx
+    └── useContext(UserContext) → gets setUser
+    └── calls setUser({ username, password }) on submit
+
+Profile.jsx
+    └── useContext(UserContext) → gets user
+    └── reads user.username and user.password
+```
+
+No props passed between `App`, `Login`, and `Profile`. Context handles it all.
+
+---
+
+## 13. The `useContext` Hook
+
+```js
+const value = useContext(SomeContext);
+```
+
+- Takes a context object (created by `React.createContext()`)
+- Returns the current value from the nearest Provider above in the tree
+- When the Provider's value changes, all components using `useContext` re-render automatically
+
+---
+
+## 14. Multiple Contexts
+
+You can have multiple contexts in the same app:
+
+```js
+const UserContext = React.createContext();       // for user/auth data
+const ProductContext = React.createContext();    // for product data
+const CartContext = React.createContext();       // for cart data
+```
+
+Each context has its own Provider and its own state. Components subscribe only to the contexts they need.
+
+---
+
+## 15. Summary
+
+| Concept | What it does |
+|---|---|
+| `React.createContext()` | Creates a new context object |
+| `Context.Provider` | Wraps components, provides data via `value` prop |
+| `useContext(Context)` | Reads the current value from the nearest Provider |
+| `children` prop | Represents nested components inside a wrapper |
+| Provider `value` | The data (and functions) shared globally |
+
+**The whole flow in 3 steps:**
+1. **Create** context with `React.createContext()`
+2. **Provide** data by wrapping your app with `<Context.Provider value={...}>`
+3. **Consume** data anywhere with `useContext(YourContext)`
+
+---
+
+## 16. When to Use Context API
+
+- User authentication data
+- App-wide theme (light/dark mode)
+- Language/locale settings
+- Shopping cart data
+- Any data needed by many unrelated components
+
+> **Not suitable for:** high-frequency updates (like animations) — for those, consider Redux or Zustand.
+
+---
+
+# React Context API — Part 2: Theme Switcher with Tailwind CSS
+
+---
+
+## 1. What We're Building
+
+A **dark/light mode theme switcher** using:
+- React Context API (advanced pattern)
+- Tailwind CSS for styling
+- A `ThemeBtn` toggle component
+- A `Card` component that reacts to theme changes
+
+The toggle button and the card are **separate components** — they need to share state. This is exactly the problem Context API solves.
+
+---
+
+## 2. How Tailwind CSS Dark Mode Works
+
+Before writing any React, you need to understand how Tailwind handles dark mode.
+
+Tailwind detects dark mode by checking for a CSS class on the `<html>` tag:
+
+```html
+<!-- Light mode -->
+<html class="light">
+
+<!-- Dark mode -->
+<html class="dark">
+```
+
+When you write Tailwind classes like `dark:bg-gray-800`, Tailwind activates that style **only when the `html` element has the `dark` class**.
+
+So the entire job of our React code is just: **toggle the `dark` or `light` class on the `<html>` element**.
+
+> **Key insight:** The UI engineer writes Tailwind classes with `dark:` variants. The React engineer just flips one class on `<html>`. Context API is the bridge between the button and the card.
+
+### Enable Class-Based Dark Mode in Tailwind Config
+
+By default, Tailwind uses the system preference (`media` strategy). We need to switch to `class` strategy so we control it manually:
+
+```js
+// tailwind.config.js
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  darkMode: "class",  // ← This is the critical line. Without this, dark mode won't work.
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+```
+
+> **Common bug:** Forgetting `darkMode: "class"` means dark mode never activates even if your React code is perfect.
+
+---
+
+## 3. Project Setup
+
+```bash
+npm create vite@latest 09themeswitcher -- --template react
+cd 09themeswitcher
+npm install
+```
+
+Then install Tailwind CSS by following the [Tailwind + Vite docs](https://tailwindcss.com/docs/guides/vite).
+
+---
+
+## 4. Folder Structure
+
+```
+src/
+├── contexts/
+│   └── theme.js            ← Context + Provider + Custom Hook (all in one file)
+├── components/
+│   ├── ThemeBtn.jsx        ← Toggle button (writes to context)
+│   └── Card.jsx            ← Product card (reads theme from context via Tailwind)
+└── App.jsx                 ← Holds state, applies theme to <html>, wraps with Provider
+```
+
+---
+
+## 5. Advanced Context Pattern: Everything in One File
+
+In Part 1, we split the context into two files (`UserContext.js` and `UserContextProvider.jsx`). In production, developers usually combine everything into **one file**. This is the pattern you'll see in real codebases.
+
+### `contexts/theme.js`
+
+```js
+// contexts/theme.js
+
+import { createContext, useContext } from "react";
+
+// Step 1: Create the context WITH default values
+// This is new compared to Part 1 — we're giving it initial/default values.
+// These defaults protect against crashes if a component tries to use context
+// without being wrapped in the Provider.
+export const ThemeContext = createContext({
+  themeMode: "light",       // default mode is light
+  darkTheme: () => {},      // placeholder function — does nothing by default
+  lightTheme: () => {},     // placeholder function — does nothing by default
+});
+
+// Step 2: Export the Provider directly from the context object
+// ThemeContext.Provider is a built-in property on every context object
+// This is an alternative to creating a separate wrapper component (like we did in Part 1)
+// Usage in App.jsx: <ThemeProvider value={...}>...</ThemeProvider>
+export const ThemeProvider = ThemeContext.Provider;
+
+// Step 3: Export a custom hook — useTheme
+// Instead of importing both `useContext` and `ThemeContext` in every component,
+// components just import `useTheme` and call it.
+// This reduces repetitive imports across files.
+export default function useTheme() {
+  return useContext(ThemeContext);  // returns whatever is in the Provider's value prop
+}
+```
+
+**Why this pattern is better for production:**
+
+| Part 1 (Two Files) | Part 2 (One File) |
+|---|---|
+| `UserContext.js` + `UserContextProvider.jsx` | `theme.js` (everything together) |
+| Components import 2 files | Components import just `useTheme` |
+| More files to maintain | Cleaner, less repetition |
+
+---
+
+## 6. App.jsx — The Brain
+
+`App.jsx` does four things:
+1. Holds the `themeMode` state
+2. Defines `lightTheme` and `darkTheme` functions
+3. Uses `useEffect` to actually change the class on `<html>`
+4. Wraps everything in `ThemeProvider`
+
+```jsx
+// App.jsx
+
+import { useEffect, useState } from 'react'
+import './App.css'
+import { ThemeProvider } from './contexts/theme'
+import ThemeBtn from './components/ThemeBtn'
+import Card from './components/Card'
+
+function App() {
+  // State to track current theme — starts as "light"
+  const [themeMode, setThemeMode] = useState("light")
+
+  // Function to switch to light mode
+  // Sets the state to "light", which triggers useEffect below
+  const lightTheme = () => {
+    setThemeMode("light")
+  }
+
+  // Function to switch to dark mode
+  // Sets the state to "dark", which triggers useEffect below
+  const darkTheme = () => {
+    setThemeMode("dark")
+  }
+
+  // This is where the ACTUAL visual theme change happens
+  // Pure JavaScript — no React magic here
+  // Runs every time themeMode changes
+  useEffect(() => {
+    // First, remove both classes to avoid conflicts (e.g. having both "light" and "dark")
+    document.querySelector('html').classList.remove("light", "dark")
+    
+    // Then add the current theme class — either "light" or "dark"
+    // Tailwind reads this class to activate dark: variant styles
+    document.querySelector('html').classList.add(themeMode)
+  }, [themeMode])  // dependency: re-run whenever themeMode changes
+  
+
+  return (
+    // ThemeProvider wraps everything so all child components can access context
+    // value prop passes: current mode + both theme-changing functions
+    <ThemeProvider value={{ themeMode, lightTheme, darkTheme }}>
+      <div className="flex flex-wrap min-h-screen items-center">
+          <div className="w-full">
+              {/* ThemeBtn sits at the top right */}
+              <div className="w-full max-w-sm mx-auto flex justify-end mb-4">
+                  <ThemeBtn />
+              </div>
+
+              {/* Card sits below the button */}
+              <div className="w-full max-w-sm mx-auto">
+                  <Card />
+              </div>
+          </div>
+      </div>
+    </ThemeProvider>
+  )
+}
+
+export default App
+```
+
+**Key insight about `useEffect` here:**
+
+The `useEffect` is NOT part of the context system — it's just plain JavaScript DOM manipulation. Context manages the **React state**. The `useEffect` applies that state to the actual **HTML document** so Tailwind can read it.
+
+```
+User clicks toggle
+    → ThemeBtn calls darkTheme() or lightTheme()
+        → setThemeMode updates state in App
+            → useEffect fires, updates <html> class
+                → Tailwind reads class, applies dark: styles everywhere
+```
+
+---
+
+## 7. ThemeBtn.jsx — The Toggle
+
+This component **reads and writes** to context — it reads `themeMode` to know the current state, and calls `darkTheme`/`lightTheme` to change it.
+
+```jsx
+// components/ThemeBtn.jsx
+
+import React from 'react'
+import useTheme from '../contexts/theme';  // just one import — that's the benefit of the custom hook
+
+export default function ThemeBtn() {
+
+    // useTheme() is our custom hook — returns everything from ThemeContext
+    // We destructure exactly what we need
+    const { themeMode, lightTheme, darkTheme } = useTheme()
+
+    // Called when the checkbox is toggled
+    const onChangeBtn = (e) => {
+        // e.currentTarget.checked is true if checkbox is checked, false if unchecked
+        const darkModeStatus = e.currentTarget.checked
+
+        if (darkModeStatus) {
+            darkTheme()   // checkbox checked → switch to dark
+        } else {
+            lightTheme()  // checkbox unchecked → switch to light
+        }
+    }
+
+    return (
+        <label className="relative inline-flex items-center cursor-pointer">
+            <input
+                type="checkbox"
+                value=""
+                className="sr-only peer"  // sr-only hides the actual checkbox visually
+                onChange={onChangeBtn}
+                // checked is true when themeMode is "dark"
+                // This keeps the checkbox in sync with actual theme state
+                checked={themeMode === "dark"}
+            />
+            {/* This div is the visible toggle pill — styled with Tailwind */}
+            <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 
+                peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer 
+                dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white 
+                after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white 
+                after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 
+                after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+            </div>
+            <span className="ml-3 text-sm font-medium text-gray-900">Toggle Theme</span>
+        </label>
+    );
+}
+```
+
+**Why `checked={themeMode === "dark"}`?**
+
+This makes the checkbox a **controlled input**. Without this, the checkbox's visual state wouldn't match the actual theme state. This expression evaluates to `true` when dark mode is active and `false` otherwise — keeping the UI and state in sync.
+
+---
+
+## 8. Card.jsx — The Consumer
+
+The card doesn't directly use context at all. It just has Tailwind `dark:` classes written in. When the `<html>` class changes to `"dark"`, Tailwind automatically activates the dark styles — the card doesn't need to know anything else.
+
+```jsx
+// components/Card.jsx
+
+import React from 'react'
+
+export default function Card() {
+    return (
+        // dark:bg-gray-800 and dark:border-gray-700 activate in dark mode
+        <div className="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <a href="/">
+                <img 
+                    className="p-8 rounded-t-lg" 
+                    src="https://images.pexels.com/photos/18264716/pexels-photo-18264716/free-photo-of-man-people-laptop-internet.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
+                    alt="product_image1" 
+                />
+            </a>
+            <div className="px-5 pb-5">
+                <a href="/">
+                    {/* dark:text-white makes the heading white in dark mode */}
+                    <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                        Apple Watch Series 7 GPS, Aluminium Case, Starlight Sport
+                    </h5>
+                </a>
+
+                {/* Star rating icons */}
+                <div className="flex items-center mt-2.5 mb-5">
+                    {/* 4 filled yellow stars */}
+                    {[...Array(4)].map((_, i) => (
+                        <svg key={i} className="w-4 h-4 text-yellow-300 mr-1" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                        </svg>
+                    ))}
+                    {/* 1 empty/grey star — dark:text-gray-600 makes it dimmer in dark mode */}
+                    <svg className="w-4 h-4 text-gray-200 dark:text-gray-600" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                    </svg>
+                    {/* Rating badge — dark:bg-blue-200 dark:text-blue-800 for dark mode */}
+                    <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">
+                        4.0
+                    </span>
+                </div>
+
+                <div className="flex items-center justify-between">
+                    {/* dark:text-white for the price in dark mode */}
+                    <span className="text-3xl font-bold text-gray-900 dark:text-white">$599</span>
+                    {/* Button has its own dark mode variants */}
+                    <a href="/"
+                        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none 
+                        focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center 
+                        dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        Add to cart
+                    </a>
+                </div>
+            </div>
+        </div>
+    );
+}
+```
+
+---
+
+## 9. The Full Data Flow
+
+```
+ThemeContext (theme.js)
+    → Default value: { themeMode: "light", darkTheme: fn, lightTheme: fn }
+
+App.jsx
+    → Holds real state: themeMode, lightTheme(), darkTheme()
+    → useEffect: watches themeMode, updates <html> class
+    → ThemeProvider wraps ThemeBtn + Card with value={{ themeMode, lightTheme, darkTheme }}
+
+ThemeBtn.jsx
+    → useTheme() → gets themeMode, darkTheme, lightTheme
+    → User toggles → calls darkTheme() or lightTheme()
+    → checked={themeMode === "dark"} keeps checkbox in sync
+
+Card.jsx
+    → No context needed directly
+    → Has dark: Tailwind classes
+    → Tailwind reads <html class="dark"> and applies those styles automatically
+```
+
+---
+
+## 10. Comparing Part 1 vs Part 2 Patterns
+
+| Feature | Part 1 (UserContext) | Part 2 (ThemeContext) |
+|---|---|---|
+| Context file | `UserContext.js` | `theme.js` |
+| Provider file | Separate `UserContextProvider.jsx` | Exported directly: `ThemeContext.Provider` |
+| Custom hook | No | Yes — `useTheme()` |
+| Default values in `createContext` | No (empty) | Yes — `{ themeMode, darkTheme, lightTheme }` |
+| Files per feature | 2 | 1 |
+| Import in components | 2 imports | 1 import (`useTheme`) |
+
+Both approaches are valid. Part 2 is just more compact and production-friendly.
+
+---
+
+## 11. Why Default Values in `createContext`?
+
+```js
+// Part 1 — no default value
+const UserContext = React.createContext();
+
+// Part 2 — with default values
+const ThemeContext = createContext({
+  themeMode: "light",
+  darkTheme: () => {},
+  lightTheme: () => {},
+});
+```
+
+Default values serve as a **safety net**. If a component tries to use the context without being wrapped in a Provider, it gets the defaults instead of crashing with `undefined`. Empty functions `() => {}` are placeholder stubs — they do nothing but prevent errors.
+
+---
+
+## 12. Why a Custom Hook (`useTheme`)?
+
+Without a custom hook, every component that needs the theme must write:
+
+```js
+// Without custom hook — two imports every time
+import { useContext } from 'react'
+import { ThemeContext } from '../contexts/theme'
+
+const { themeMode } = useContext(ThemeContext)
+```
+
+With the custom hook:
+
+```js
+// With custom hook — one import, one line
+import useTheme from '../contexts/theme'
+
+const { themeMode } = useTheme()
+```
+
+The custom hook is just a wrapper that hides the repetitive `useContext(ThemeContext)` call. Same result, less code.
+
+---
+
+## 13. The Bug That Was Fixed
+
+During the lecture, the toggle wasn't working even though the React code was correct. The fix was adding `darkMode: "class"` to `tailwind.config.js`.
+
+**Why this matters:**
+
+Tailwind has two dark mode strategies:
+- `"media"` — uses the OS/system dark mode preference (default)
+- `"class"` — uses the presence of a `dark` class on `<html>`
+
+Since we're controlling dark mode with JavaScript (adding/removing the class), we **must** use `"class"` strategy. Without it, Tailwind ignores the class we're adding and dark mode never activates.
+
+```js
+// tailwind.config.js
+export default {
+  darkMode: "class",  // ← Without this one line, nothing works
+  // ...
+}
+```
+
+---
+
+## 14. Summary Checklist
+
+To build a theme switcher with Context API + Tailwind:
+
+1. **`tailwind.config.js`** — set `darkMode: "class"`
+2. **`contexts/theme.js`** — create context with defaults, export Provider and custom hook
+3. **`App.jsx`** — hold `themeMode` state, define `lightTheme`/`darkTheme`, use `useEffect` to apply class to `<html>`, wrap with `ThemeProvider`
+4. **`ThemeBtn.jsx`** — use `useTheme()`, call `darkTheme()`/`lightTheme()` on toggle, sync `checked` with `themeMode`
+5. **`Card.jsx`** — just write Tailwind `dark:` classes, context handles the rest automatically
+
+
+<!-- Transcript:
 ```
 हां जी कैसे हैं आप सभी उम्मीद करता हूं
 अच्छा ही होंगे
@@ -972,7 +1811,204 @@ profile.js तो एक में हम क्या करेंगे डा
 और फटाफट करो यार क्या कब तक देखेंगे 100
 के सब्सक्राइबर क्रॉस करें कुछ सिल्वर बटन
 आए हैं कुछ हम भी देखें की हां मजा ए रहा
-है लोगों को लोग सपोर्ट कर रहे हैं ठीक है
+है लोगों को लोग सपोर्ट कर रहे हैं 
+
+```
+
+Starting point of context api is from props
+If you understand props, then you will understand the problem of pros, then comes context api
+
+In this lec, we will build two project,
+We will see two coding styles
+After this, we don't need to watch any video on context api.
+
+We are going to build theme toggler
+This project will help us understand the context api.
+
+To pass the data from one component to another, we use props.
+When we have to pass data from component 1 to component 5, we pass it through component 2, 3 and 4 , even though we dont need the props in intermediate components.
+Earlier time, we use to pass the data using this method.
+
+A better approach would be to have a global object:
+{
+    title: "chai"
+}
+Is there any mechanism so that the component that need the data can get data from this global object?
+yes
+
+Using this approach, the intermediate components are not using the data unnecessary.
+
+can we pass the data from the component?
+and get he data from the object to component?
+
+The concept is known as prop drilling.
+
+For this, we have Context API
+
+As the problem is not only related to react.
+Redux exist for this. It is a state management library.
+Passing the data in organised format.
+
+in react , we use react-Redux
+The easier version of redux available in market is redux-toolkit(RTK)
+
+Zustand is also used for state management
+there are few more state management libraries
+
+https://react.dev/reference/react/useContext  : read 
+
+const value = useContext(SomeContext)
+we need to understand this line
+
+We dont need to install other thing
+this context api comes along with the react
+
+now, create a vite app named "08miniContext"
+
+make a folder named "context" in "src"
+under that make two files: UserContext.js and UserContextPRovider.jsx:
+
+UserContext.js
+```
+import React from "react";
+
+const UserContext = React.createContext()
+
+export default UserContext;
+```
+
+
+UserContextPRovider.jsx:
+```
+import React, { useState } from 'react'
+import UserContext from './UserContext'
+
+const UserContextProvider = ({ children }) => {
+    const [user, setUser] = useState(null); // do API calls here
+    return (
+        <UserContext.Provider value={{user, setUser}}>
+        {children}
+        </UserContext.Provider>
+    )
+}
+ 
+export default UserContextProvider 
+```
+
+Now, the store is created, how to get access of this store.
+we can do it in either main.jsx or App.jsx
+
+Update App.jsx:
+```
+import Login from "./components/Login"
+import Profile from "./components/Profile"
+import UserContext from "./context/UserContext"
+import UserContextProvider from "./context/UserContextProvider"
+
+function App() {
+  
+  return (
+    <UserContextProvider>
+      <h1>Context API</h1>
+      <Login />
+      <Profile />
+    </UserContextProvider>
+  )
+}
+
+export default App
+
+
+```
+
+
+Now, make a folder named "components" in "src".
+Under that make two file:
+1. Login.jsx: for sending data to context
+2. Profile.jsx: for retrieving data from the context
+
+
+Login.jsx:
+```
+import React, {useState, useContext} from 'react'
+import UserContext from '../context/UserContext'
+
+
+function Login() {
+
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+
+    const { setUser } = useContext(UserContext);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setUser({username, password})
+    }
+
+  return (
+    <div>
+        <h2>Login</h2>
+          <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="username"
+          />
+          {" "}
+          <input
+              type="text"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="password"
+          />    
+        <button onClick={handleSubmit}>Submit</button>     
+    </div>
+  )
+}
+
+export default Login
+```
+
+Profile.jsx:
+```
+import React, { useContext} from 'react'
+import UserContext from '../context/UserContext'
+
+
+function Profile() {
+
+    const { user } = useContext(UserContext);
+
+    if (!user) 
+        return (
+            <div>Please Login</div>
+        )
+    return (
+        <>
+            <div>Welcome {user.username} </div>
+            <div>Password {user.password} </div>
+        </>
+    )
+
+}
+
+export default Profile
+```
+
+make detailed notes using the transcript and my given code.
+make notes in english in md format.
+never miss any point
+explain things easily
+also use comments in code
+
+--- -->
+<!-- 
+Transcript:
+```
+
+
+ठीक है
 तो अब चलते हैं हमारे नाइंथ प्रोजेक्ट पे
 हां जी इसी के अंदर ही हम अपना 9th
 प्रोजेक्ट बनाएंगे बट उससे पहले मैं क्या
@@ -1852,197 +2888,242 @@ app.gs के अंदर ठीक है जी आप डॉट जेएस
 मिलते हैं आपसे अगले वीडियो के अंदर
 ```
 
-Starting point of context api is from props
-If you understand props, then you will understand the problem of pros, then comes context api
-
-In this lec, we will build two project,
-We will see two coding styles
-After this, we don't need to watch any video on context api.
-
-We are going to build theme toggler
-This project will help us understand the context api.
-
-To pass the data from one component to another, we use props.
-When we have to pass data from component 1 to component 5, we pass it through component 2, 3 and 4 , even though we dont need the props in intermediate components.
-Earlier time, we use to pass the data using this method.
-
-A better approach would be to have a global object:
-{
-    title: "chai"
-}
-Is there any mechanism so that the component that need the data can get data from this global object?
-yes
-
-Using this approach, the intermediate components are not using the data unnecessary.
-
-can we pass the data from the component?
-and get he data from the object to component?
-
-The concept is known as prop drilling.
-
-For this, we have Context API
-
-As the problem is not only related to react.
-Redux exist for this. It is a state management library.
-Passing the data in organised format.
-
-in react , we use react-Redux
-The easier version of redux available in market is redux-toolkit(RTK)
-
-Zustand is also use dfor state management
-
-https://react.dev/reference/react/useContext  : read 
-
-const value = useContext(SomeContext)
-we need to understand this line
-
-We dont need to install other thing
-this context api comes along with the react
-
-now, create a vite app named "08miniContext"
-
-make a folder named "context" in "src"
-under that make two files: UserContext.js and UserContextPRovider.jsx:
-
-UserContext.js
-```
-import React from "react";
-
-const UserContext = React.createContext()
-
-export default UserContext;
-```
-
-
-UserContextPRovider.jsx:
-```
-import React, { useState } from 'react'
-import UserContext from './UserContext'
-
-const UserContextProvider = ({ children }) => {
-    const [user, setUser] = useState(null); // do API calls here
-    return (
-        <UserContext.Provider value={{user, setUser}}>
-        {children}
-        </UserContext.Provider>
-    )
-}
- 
-export default UserContextProvider 
-```
-
-Update App.jsx:
-```
-import Login from "./components/Login"
-import Profile from "./components/Profile"
-import UserContext from "./context/UserContext"
-import UserContextProvider from "./context/UserContextProvider"
-
-
-
-
-
-function App() {
-  
-
-  return (
-    <UserContextProvider>
-      <h1>Context API</h1>
-      <Login />
-      <Profile />
-    </UserContextProvider>
-  )
-}
-
-export default App
-
-
-```
-
-
-Now, make a folder named "components" in "src".
-Under that make two file:
-1. Login.jsx: for sending data to context
-2. Profile.jsx: for retrieving data from the context
-
-
-Login.jsx:
-```
-import React, {useState, useContext} from 'react'
-import UserContext from '../context/UserContext'
-
-
-function Login() {
-
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-
-    const { setUser } = useContext(UserContext);
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setUser({username, password})
-    }
-
-  return (
-    <div>
-        <h2>Login</h2>
-          <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="username"
-          />
-          {" "}
-          <input
-              type="text"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="password"
-          />    
-        <button onClick={handleSubmit}>Submit</button>     
-    </div>
-  )
-}
-
-export default Login
-```
-
-Profile.jsx:
-```
-import React, { useContext} from 'react'
-import UserContext from '../context/UserContext'
-
-
-function Profile() {
-
-    const { user } = useContext(UserContext);
-
-    if (!user) 
-        return (
-            <div>Please Login</div>
-        )
-    return (
-        <>
-            <div>Welcome {user.username} </div>
-            <div>Password {user.password} </div>
-        </>
-    )
-
-}
-
-export default Profile
-```
-
-make detailed notes using the transcript and my given code.
-make notes in english in md format.
-never miss any point
-explain things easily
-also use comments in code
-
----
 Part: 2
 
 Now, we will go one step further because we need to understand one more method. 
 
 Now, lets go to our 9th project.
+
+Tailwind also have a playground.
+There is a button that switches ui in dark mode and light mode.
+if we add "dark" into class it will be in dark mode 
+if we add "light" into class it will be in light mode 
+Here, we understood how the dark and light mode works in tailwind.
+
+We have to create a toggle button that switches between dark and light mode.
+But, if we make separate component for switch, who will tell the card that we toggled into dark mode/white mode.
+State has been updated for html.
+
+How both card and switch share data and must be in sync?
+
+
+Now, lets create a vite project "09themeswitcher" and integrate TailwindCSS - for this follow the docs of Tailwind.
+
+App.jsx:
+```
+
+import './App.css'
+
+function App() {
+ 
+  return (
+    <>
+
+      <div className="flex flex-wrap min-h-screen items-center">
+        <div className="w-full">
+          <div className="w-full max-w-sm mx-auto flex justify-end mb-4">
+            {/*  themeBtn */}
+          </div>
+
+          <div className="w-full max-w-sm mx-auto">
+            {/* Card */}
+          </div>
+        </div>
+      </div>
+
+    </>
+  )
+}
+
+export default App
+```
+
+Now, we will go make context first but this time we will make context in different style.
+
+In fact, we can see that we don't have themeprovider in the App.jsx.
+
+we will make a new folder named "contexts" in src folder.
+under "contexts" we will make a new file named "theme.js"
+
+contexts/theme.js:
+```
+import { createContext, useContext } from "react";
+
+export const ThemeContext = createContext({
+  themeMode: "light",
+  darkTheme: () => {},
+  lightTheme: () => {},
+});
+
+export const ThemeProvider = ThemeContext.Provider;
+
+export default function useTheme() {
+  return useContext(ThemeContext);
+}
+```
+
+App.jsx:
+```
+
+import { useEffect, useState } from 'react'
+import './App.css'
+import { ThemeProvider } from './contexts/theme'
+import ThemeBtn from './components/ThemeBtn'
+import Card from './components/Card'
+
+function App() {
+  const [themeMode, setThemeMode] = useState("light")
+
+  const lightTheme = () => {
+    setThemeMode("light")
+  }
+
+  const darkTheme = () => {
+    setThemeMode("dark")
+  }
+
+  // actual change in theme
+
+  useEffect(() => {
+    document.querySelector('html').classList.remove("light", "dark")
+    document.querySelector('html').classList.add(themeMode)
+  }, [themeMode])
+  
+
+  return (
+    <ThemeProvider value={{themeMode, lightTheme, darkTheme}}>
+      <div className="flex flex-wrap min-h-screen items-center">
+          <div className="w-full">
+              <div className="w-full max-w-sm mx-auto flex justify-end mb-4">
+                  <ThemeBtn />
+              </div>
+
+              <div className="w-full max-w-sm mx-auto">
+                  <Card />
+              </div>
+          </div>
+      </div>
+    </ThemeProvider>
+  )
+}
+
+export default App
+```
+
+make a folder named "components" in "src" folder.
+make two file under this: Card.jsx and ThemeBtn.jsx
+
+ThemeBtn.jsx:
+```
+import React from 'react'
+import useTheme from '../contexts/theme';
+
+export default function ThemeBtn() {
+
+    const { themeMode, lightTheme, darkTheme } = useTheme()
+    const onChangeBtn = (e) => {
+        const darkModeStatus = e.currentTarget.checked
+        if (darkModeStatus) {
+            darkTheme()
+        } else {
+            lightTheme()
+        }
+    }
+    return (
+        <label className="relative inline-flex items-center cursor-pointer">
+            <input
+                type="checkbox"
+                value=""
+                className="sr-only peer"
+                onChange={onChangeBtn}
+                checked={themeMode === "dark"}
+            />
+            <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+            <span className="ml-3 text-sm font-medium text-gray-900">Toggle Theme</span>
+        </label>
+    );
+}
+```
+
+
+Cards.jsx:
+```
+import React from 'react'
+
+export default function Card() {
+    return (
+        <div className="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <a href="/">
+                <img className="p-8 rounded-t-lg" src="https://images.pexels.com/photos/18264716/pexels-photo-18264716/free-photo-of-man-people-laptop-internet.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="product_image1" />
+            </a>
+            <div className="px-5 pb-5">
+                <a href="/">
+                    <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                        Apple Watch Series 7 GPS, Aluminium Case, Starlight Sport
+                    </h5>
+                </a>
+                <div className="flex items-center mt-2.5 mb-5">
+                    <svg
+                        className="w-4 h-4 text-yellow-300 mr-1"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor"
+                        viewBox="0 0 22 20"
+                    >
+                        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                    </svg>
+                    <svg
+                        className="w-4 h-4 text-yellow-300 mr-1"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor"
+                        viewBox="0 0 22 20"
+                    >
+                        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                    </svg>
+                    <svg
+                        className="w-4 h-4 text-yellow-300 mr-1"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor"
+                        viewBox="0 0 22 20"
+                    >
+                        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                    </svg>
+                    <svg
+                        className="w-4 h-4 text-yellow-300 mr-1"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor"
+                        viewBox="0 0 22 20"
+                    >
+                        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                    </svg>
+                    <svg
+                        className="w-4 h-4 text-gray-200 dark:text-gray-600"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor"
+                        viewBox="0 0 22 20"
+                    >
+                        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                    </svg>
+                    <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">
+                        4.0
+                    </span>
+                </div>
+                <div className="flex items-center justify-between">
+                    <span className="text-3xl font-bold text-gray-900 dark:text-white">$599</span>
+                    <a
+                        href="/"
+                        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    >
+                        Add to cart
+                    </a>
+                </div>
+            </div>
+        </div>
+    );
+}
+```
+ -->
