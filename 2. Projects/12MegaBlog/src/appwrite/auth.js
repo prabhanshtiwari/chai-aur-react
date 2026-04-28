@@ -31,7 +31,7 @@ export class AuthService {
       return await this.login({ email, password });
     } catch (error) {
       console.error("AuthService :: createAccount :: error", error);
-      throw error;-
+      throw error;
     }
   }
 
