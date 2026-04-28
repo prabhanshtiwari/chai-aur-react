@@ -2,25 +2,29 @@ import conf from "../conf/conf.js";
 import { Client, ID, TablesDB, Storage, Query } from "appwrite";
 
 export class Service {
-  client = new Client();
+  client;
   tablesDB;
-  bucket;
+  storage;
 
   constructor() {
-    this.client
+    this.client = new Client()
       .setEndpoint(conf.appwriteUrl)
       .setProject(conf.appwriteProjectId);
 
     this.tablesDB = new TablesDB(this.client);
-    this.bucket = new Storage(this.client);
+    this.storage = new Storage(this.client);
   }
+
+  // ===========================
+  // 📝 POSTS (ROWS)
+  // ===========================
 
   async createPost({ title, slug, content, featuredImage, status, userId }) {
     try {
       return await this.tablesDB.createRow({
         databaseId: conf.appwriteDatabaseId,
         tableId: conf.appwriteCollectionId,
-        rowId: slug, // same behavior as before
+        rowId: slug || ID.unique(),
         data: {
           title,
           content,
@@ -31,10 +35,11 @@ export class Service {
       });
     } catch (error) {
       console.log("Appwrite service :: createPost :: error", error);
+      throw error;
     }
   }
 
-  async updatePost(slug, { title, content, featuredImage, status }) {
+  async updatePost(slug, {title, content, featuredImage, status}) {
     try {
       return await this.tablesDB.updateRow({
         databaseId: conf.appwriteDatabaseId,
@@ -44,11 +49,12 @@ export class Service {
           title,
           content,
           featuredImage,
-          status,
+          status
         },
       });
     } catch (error) {
       console.log("Appwrite service :: updatePost :: error", error);
+      
     }
   }
 
@@ -84,7 +90,7 @@ export class Service {
       return await this.tablesDB.listRows({
         databaseId: conf.appwriteDatabaseId,
         tableId: conf.appwriteCollectionId,
-        queries,
+        queries: queries,
       });
     } catch (error) {
       console.log("Appwrite service :: getPosts :: error", error);
@@ -92,11 +98,13 @@ export class Service {
     }
   }
 
-  // file upload service
+  // ===========================
+  // 📁 FILE STORAGE
+  // ===========================
 
   async uploadFile(file) {
     try {
-      return await this.bucket.createFile({
+      return await this.storage.createFile({
         bucketId: conf.appwriteBucketId,
         fileId: ID.unique(),
         file: file,
@@ -109,7 +117,7 @@ export class Service {
 
   async deleteFile(fileId) {
     try {
-      await this.bucket.deleteFile({
+      await this.storage.deleteFile({
         bucketId: conf.appwriteBucketId,
         fileId: fileId,
       });
@@ -121,7 +129,7 @@ export class Service {
   }
 
   getFilePreview(fileId) {
-    return this.bucket.getFilePreview({
+    return this.storage.getFilePreview({
       bucketId: conf.appwriteBucketId,
       fileId: fileId,
     });
