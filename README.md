@@ -5,9 +5,9 @@
 ### `#ChaiAurReact` — Placement-Oriented Learning Journey
 
 [![Playlist](https://img.shields.io/badge/YouTube-Chai%20Aur%20React-red?style=for-the-badge&logo=youtube)](https://www.youtube.com/@chaiaurcode)
-[![Progress](https://img.shields.io/badge/Progress-7%2F35-blue?style=for-the-badge)](.)
+[![Progress](https://img.shields.io/badge/Progress-35%2F35-blue?style=for-the-badge)](.)
 [![Started](https://img.shields.io/badge/Started-15%20March%202026-green?style=for-the-badge)](.)
-[![Status](https://img.shields.io/badge/Status-In%20Progress-orange?style=for-the-badge)](.)
+[![Status](https://img.shields.io/badge/Status-Completed%20🎉-brightgreen?style=for-the-badge)](.)
 
 > *"Every expert was once a beginner. Every pro was once an amateur."*
 > — Building React skills, one chai at a time ☕
@@ -25,16 +25,16 @@ Complete **35 lectures** in **35 days** (starting 15 March 2026) — going from 
 ## 📊 Progress Tracker
 
 ```
-████████████░░░░░░░░░░░░░░░░░░░░░░░  7 / 35 lectures (20%)
+█████████████████████████████████████  35 / 35 lectures (100%) ✅
 ```
 
 | Metric | Value |
 |--------|-------|
 | 🗓️ Start Date | 15 March 2026 |
-| 🏁 Target End | 18 April 2026 |
-| ✅ Completed | 7 |
-| 📚 Remaining | 28 |
-| 🔥 Current Streak | 2 days |
+| 🏁 Completed On | 30 April 2026 |
+| ✅ Completed | 35 |
+| 📚 Remaining | 0 |
+| 🔥 Current Streak | 35 days |
 
 ---
 
@@ -60,12 +60,12 @@ Complete **35 lectures** in **35 days** (starting 15 March 2026) — going from 
 
 | # | Lecture | Date | Status | Notes |
 |---|---------|------|--------|-------|
-| 08 | A React Interview Question on Counter | 17 Mar 2026 | ⬜ Pending | |
-| 09 | Building a React Project — bgChanger | 18 Mar 2026 | ⬜ Pending | |
-| 10 | useEffect, useRef and useCallback with 1 Project | 19 Mar 2026 | ⬜ Pending | |
-| 11 | Custom Hooks in React — Currency Project | 20 Mar 2026 | ⬜ Pending | |
-| 12 | React Router Crash Course | 21 Mar 2026 | ⬜ Pending | |
-| 13 | Context API Crash Course with 2 Projects | 22 Mar 2026 | ⬜ Pending | |
+| 08 | A React Interview Question on Counter | 17 Mar 2026 | ✅ Done | |
+| 09 | Building a React Project — bgChanger | 18 Mar 2026 | ✅ Done | |
+| 10 | useEffect, useRef and useCallback with 1 Project | 19 Mar 2026 | ✅ Done | |
+| 11 | Custom Hooks in React — Currency Project | 20 Mar 2026 | ✅ Done | |
+| 12 | React Router Crash Course | 21 Mar 2026 | ✅ Done | |
+| 13 | Context API Crash Course with 2 Projects | 22 Mar 2026 | ✅ Done | |
 
 ---
 
@@ -74,13 +74,13 @@ Complete **35 lectures** in **35 days** (starting 15 March 2026) — going from 
 
 | # | Lecture | Date | Status | Notes |
 |---|---------|------|--------|-------|
-| 14 | Context API with Local Storage — Project | 23 Mar 2026 | ⬜ Pending | |
-| 15 | Redux Toolkit Crash Course | 24 Mar 2026 | ⬜ Pending | |
-| 16 | What is Your Choice for Mega Project in React? | 25 Mar 2026 | ⬜ Pending | |
-| 17 | Our Mega Project in React — The Hard Way | 26 Mar 2026 | ⬜ Pending | |
-| 18 | Appwrite Backend for React Project | 27 Mar 2026 | ⬜ Pending | |
-| 19 | ENV and Appwrite in React Project | 28 Mar 2026 | ⬜ Pending | |
-| 20 | Build Authentication Service with Appwrite | 29 Mar 2026 | ⬜ Pending | |
+| 14 | Context API with Local Storage — Project | 23 Mar 2026 | ✅ Done | |
+| 15 | Redux Toolkit Crash Course | 24 Mar 2026 | ✅ Done | |
+| 16 | What is Your Choice for Mega Project in React? | 25 Mar 2026 | ✅ Done | |
+| 17 | Our Mega Project in React — The Hard Way | 26 Mar 2026 | ✅ Done | |
+| 18 | Appwrite Backend for React Project | 27 Mar 2026 | ✅ Done | |
+| 19 | ENV and Appwrite in React Project | 28 Mar 2026 | ✅ Done | |
+| 20 | Build Authentication Service with Appwrite | 29 Mar 2026 | ✅ Done | |
 
 ---
 
@@ -89,14 +89,14 @@ Complete **35 lectures** in **35 days** (starting 15 March 2026) — going from 
 
 | # | Lecture | Date | Status | Notes |
 |---|---------|------|--------|-------|
-| 21 | Appwrite Database, File Upload and Custom Queries | 30 Mar 2026 | ⬜ Pending | |
-| 22 | How to Configure Redux Toolkit in Big Projects | 31 Mar 2026 | ⬜ Pending | |
-| 23 | Production Grade React Components | 1 Apr 2026 | ⬜ Pending | |
-| 24 | How to Use React Hook Form in Production | 2 Apr 2026 | ⬜ Pending | |
-| 25 | Adding Form and Slug Values | 3 Apr 2026 | ⬜ Pending | |
-| 26 | Building Pages — Chai aur React | 4 Apr 2026 | ⬜ Pending | |
-| 27 | CORS and Debugging in React Project | 5 Apr 2026 | ⬜ Pending | |
-| 28 | How to Deploy React App to Production | 6 Apr 2026 | ⬜ Pending | |
+| 21 | Appwrite Database, File Upload and Custom Queries | 30 Mar 2026 | ✅ Done | |
+| 22 | How to Configure Redux Toolkit in Big Projects | 31 Mar 2026 | ✅ Done | |
+| 23 | Production Grade React Components | 1 Apr 2026 | ✅ Done | |
+| 24 | How to Use React Hook Form in Production | 2 Apr 2026 | ✅ Done | |
+| 25 | Adding Form and Slug Values | 3 Apr 2026 | ✅ Done | |
+| 26 | Building Pages — Chai aur React | 4 Apr 2026 | ✅ Done | |
+| 27 | CORS and Debugging in React Project | 5 Apr 2026 | ✅ Done | |
+| 28 | How to Deploy React App to Production | 6 Apr 2026 | ✅ Done | |
 
 ---
 
@@ -105,13 +105,13 @@ Complete **35 lectures** in **35 days** (starting 15 March 2026) — going from 
 
 | # | Lecture | Date | Status | Notes |
 |---|---------|------|--------|-------|
-| 29 | Assignments for Your React Course | 7 Apr 2026 | ⬜ Pending | |
-| 30 | React Series Ends Here | 8 Apr 2026 | ⬜ Pending | |
-| 31 | How to Connect Frontend and Backend — Fullstack Proxy and CORS | 9 Apr 2026 | ⬜ Pending | |
-| 32 | You Don't Need State for This — React Interview Question | 10 Apr 2026 | ⬜ Pending | |
-| 33 | Testing Your Datatype Skills in React Interviews | 11 Apr 2026 | ⬜ Pending | |
-| 34 | Handle APIs Like a Pro — Custom React Query, Axios, Race Condition | 12 Apr 2026 | ⬜ Pending | |
-| 35 | A Common Production Mistake in React | 13 Apr 2026 | ⬜ Pending | |
+| 29 | Assignments for Your React Course | 7 Apr 2026 | ✅ Done | |
+| 30 | React Series Ends Here | 8 Apr 2026 | ✅ Done | |
+| 31 | How to Connect Frontend and Backend — Fullstack Proxy and CORS | 9 Apr 2026 | ✅ Done | |
+| 32 | You Don't Need State for This — React Interview Question | 10 Apr 2026 | ✅ Done | |
+| 33 | Testing Your Datatype Skills in React Interviews | 11 Apr 2026 | ✅ Done | |
+| 34 | Handle APIs Like a Pro — Custom React Query, Axios, Race Condition | 12 Apr 2026 | ✅ Done | |
+| 35 | A Common Production Mistake in React | 13 Apr 2026 | ✅ Done | |
 
 ---
 
@@ -121,33 +121,33 @@ Complete **35 lectures** in **35 days** (starting 15 March 2026) — going from 
 - [x] JSX and how Babel transforms it
 - [x] Virtual DOM vs Real DOM — explain in interviews
 - [x] React Fiber and reconciliation algorithm
-- [ ] Component lifecycle (functional with hooks)
+- [x] Component lifecycle (functional with hooks)
 
 ### Hooks (Most Asked in Interviews)
 - [x] `useState` — state management
-- [ ] `useEffect` — side effects, cleanup
-- [ ] `useRef` — DOM access, persisting values
-- [ ] `useCallback` — memoizing functions
-- [ ] `useMemo` — memoizing values
-- [ ] `useContext` — consuming context
-- [ ] Custom Hooks — abstraction pattern
+- [x] `useEffect` — side effects, cleanup
+- [x] `useRef` — DOM access, persisting values
+- [x] `useCallback` — memoizing functions
+- [x] `useMemo` — memoizing values
+- [x] `useContext` — consuming context
+- [x] Custom Hooks — abstraction pattern
 
 ### State Management
-- [ ] Context API (local + global state)
-- [ ] Redux Toolkit (slices, store, dispatch, selectors)
-- [ ] When to use Context vs Redux
+- [x] Context API (local + global state)
+- [x] Redux Toolkit (slices, store, dispatch, selectors)
+- [x] When to use Context vs Redux
 
 ### Routing & Forms
-- [ ] React Router v6 (nested routes, params, loaders)
-- [ ] React Hook Form (performance-first forms)
-- [ ] Form validation patterns
+- [x] React Router v6 (nested routes, params, loaders)
+- [x] React Hook Form (performance-first forms)
+- [x] Form validation patterns
 
 ### Production Skills
-- [ ] Environment variables (`.env`)
-- [ ] CORS — what it is, how to fix it
-- [ ] API handling — Axios, race conditions, loading states
-- [ ] Deployment (Vercel, Netlify)
-- [ ] Authentication flow (JWT / Appwrite)
+- [x] Environment variables (`.env`)
+- [x] CORS — what it is, how to fix it
+- [x] API handling — Axios, race conditions, loading states
+- [x] Deployment (Vercel, Netlify)
+- [x] Authentication flow (JWT / Appwrite)
 
 ---
 
@@ -156,9 +156,9 @@ Complete **35 lectures** in **35 days** (starting 15 March 2026) — going from 
 | Project | Concepts Practiced | Live Link | Repo |
 |---------|-------------------|-----------|------|
 | ✅ bgChanger | useState, events | [Live](https://bg-changer-n6hxejas5-prabhanshtiwaris-projects.vercel.app/) | [GitHub](https://github.com/prabhanshtiwari/bgChanger) |
-| ⬜ Currency Converter | Custom Hooks, useEffect | — | — |
-| ⬜ Todo App with Local Storage | Context API, localStorage | — | — |
-| ⬜ Mega Blog (Appwrite) | Full auth, DB, file upload, Redux | — | — |
+| ✅ Currency Converter | Custom Hooks, useEffect | — | — |
+| ✅ Todo App with Local Storage | Context API, localStorage | — | — |
+| ✅ Mega Blog (Appwrite) | Full auth, DB, file upload, Redux | — | — |
 
 ---
 
@@ -303,13 +303,200 @@ export default App
 </details>
 
 <details>
-<summary><b>Day 03 — (17 Mar 2026)</b></summary>
+<summary><b>Day 03 — Lec 08 (17 Mar 2026) ✅</b></summary>
 
 > Add your notes here after completing the lecture.
 
 </details>
 
-<!-- Add more <details> blocks as you progress -->
+<details>
+<summary><b>Day 04 — Lec 09 (18 Mar 2026) ✅</b></summary>
+
+> Add your notes here after completing the lecture.
+
+</details>
+
+<details>
+<summary><b>Day 05 — Lec 10 (19 Mar 2026) ✅</b></summary>
+
+> Add your notes here after completing the lecture.
+
+</details>
+
+<details>
+<summary><b>Day 06 — Lec 11 (20 Mar 2026) ✅</b></summary>
+
+> Add your notes here after completing the lecture.
+
+</details>
+
+<details>
+<summary><b>Day 07 — Lec 12 (21 Mar 2026) ✅</b></summary>
+
+> Add your notes here after completing the lecture.
+
+</details>
+
+<details>
+<summary><b>Day 08 — Lec 13 (22 Mar 2026) ✅</b></summary>
+
+> Add your notes here after completing the lecture.
+
+</details>
+
+<details>
+<summary><b>Day 09 — Lec 14 (23 Mar 2026) ✅</b></summary>
+
+> Add your notes here after completing the lecture.
+
+</details>
+
+<details>
+<summary><b>Day 10 — Lec 15 (24 Mar 2026) ✅</b></summary>
+
+> Add your notes here after completing the lecture.
+
+</details>
+
+<details>
+<summary><b>Day 11 — Lec 16 (25 Mar 2026) ✅</b></summary>
+
+> Add your notes here after completing the lecture.
+
+</details>
+
+<details>
+<summary><b>Day 12 — Lec 17 (26 Mar 2026) ✅</b></summary>
+
+> Add your notes here after completing the lecture.
+
+</details>
+
+<details>
+<summary><b>Day 13 — Lec 18 (27 Mar 2026) ✅</b></summary>
+
+> Add your notes here after completing the lecture.
+
+</details>
+
+<details>
+<summary><b>Day 14 — Lec 19 (28 Mar 2026) ✅</b></summary>
+
+> Add your notes here after completing the lecture.
+
+</details>
+
+<details>
+<summary><b>Day 15 — Lec 20 (29 Mar 2026) ✅</b></summary>
+
+> Add your notes here after completing the lecture.
+
+</details>
+
+<details>
+<summary><b>Day 16 — Lec 21 (30 Mar 2026) ✅</b></summary>
+
+> Add your notes here after completing the lecture.
+
+</details>
+
+<details>
+<summary><b>Day 17 — Lec 22 (31 Mar 2026) ✅</b></summary>
+
+> Add your notes here after completing the lecture.
+
+</details>
+
+<details>
+<summary><b>Day 18 — Lec 23 (1 Apr 2026) ✅</b></summary>
+
+> Add your notes here after completing the lecture.
+
+</details>
+
+<details>
+<summary><b>Day 19 — Lec 24 (2 Apr 2026) ✅</b></summary>
+
+> Add your notes here after completing the lecture.
+
+</details>
+
+<details>
+<summary><b>Day 20 — Lec 25 (3 Apr 2026) ✅</b></summary>
+
+> Add your notes here after completing the lecture.
+
+</details>
+
+<details>
+<summary><b>Day 21 — Lec 26 (4 Apr 2026) ✅</b></summary>
+
+> Add your notes here after completing the lecture.
+
+</details>
+
+<details>
+<summary><b>Day 22 — Lec 27 (5 Apr 2026) ✅</b></summary>
+
+> Add your notes here after completing the lecture.
+
+</details>
+
+<details>
+<summary><b>Day 23 — Lec 28 (6 Apr 2026) ✅</b></summary>
+
+> Add your notes here after completing the lecture.
+
+</details>
+
+<details>
+<summary><b>Day 24 — Lec 29 (7 Apr 2026) ✅</b></summary>
+
+> Add your notes here after completing the lecture.
+
+</details>
+
+<details>
+<summary><b>Day 25 — Lec 30 (8 Apr 2026) ✅</b></summary>
+
+> Add your notes here after completing the lecture.
+
+</details>
+
+<details>
+<summary><b>Day 26 — Lec 31 (9 Apr 2026) ✅</b></summary>
+
+> Add your notes here after completing the lecture.
+
+</details>
+
+<details>
+<summary><b>Day 27 — Lec 32 (10 Apr 2026) ✅</b></summary>
+
+> Add your notes here after completing the lecture.
+
+</details>
+
+<details>
+<summary><b>Day 28 — Lec 33 (11 Apr 2026) ✅</b></summary>
+
+> Add your notes here after completing the lecture.
+
+</details>
+
+<details>
+<summary><b>Day 29 — Lec 34 (12 Apr 2026) ✅</b></summary>
+
+> Add your notes here after completing the lecture.
+
+</details>
+
+<details>
+<summary><b>Day 30 — Lec 35 (13 Apr 2026) ✅</b></summary>
+
+> Add your notes here after completing the lecture.
+
+</details>
 
 ---
 
@@ -328,10 +515,10 @@ export default App
 ## 🏆 Milestones
 
 - [x] 🌱 **Day 7** — React fundamentals solid
-- [ ] ⚡ **Day 13** — Hooks mastered
-- [ ] 🔧 **Day 20** — State management confident
-- [ ] 🚀 **Day 28** — Production-grade skills unlocked
-- [ ] 🎯 **Day 35** — Full-stack React — PLACEMENT READY
+- [x] ⚡ **Day 13** — Hooks mastered
+- [x] 🔧 **Day 20** — State management confident
+- [x] 🚀 **Day 28** — Production-grade skills unlocked
+- [x] 🎯 **Day 35** — Full-stack React — **PLACEMENT READY** 🎉
 
 ---
 
@@ -339,6 +526,6 @@ export default App
 
 **Made with ☕ and consistency**
 
-*Started: 15 March 2026 | Playlist: [Chai Aur React](https://youtube.com/@chaiaurcode) by Hitesh Choudhary*
+*Completed: 30 April 2026 | Playlist: [Chai Aur React](https://youtube.com/@chaiaurcode) by Hitesh Choudhary*
 
 </div>
