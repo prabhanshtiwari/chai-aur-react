@@ -156,8 +156,8 @@ Complete **35 lectures** in **35 days** (starting 15 March 2026) — going from 
 | Project | Concepts Practiced | Live Link | Repo |
 |---------|-------------------|-----------|------|
 | ✅ bgChanger | useState, events | [Live](https://bg-changer-n6hxejas5-prabhanshtiwaris-projects.vercel.app/) | [GitHub](https://github.com/prabhanshtiwari/bgChanger) |
-| ✅ Currency Converter | Custom Hooks, useEffect | — | — |
-| ✅ Todo App with Local Storage | Context API, localStorage | — | — |
+| ✅ Currency Converter | Custom Hooks, useEffect | - | - |
+| ✅ Todo App with Local Storage | Context API, localStorage | [Live](https://todo-application-tau-two.vercel.app/) | [GitHub](https://github.com/prabhanshtiwari/todo-application) |
 | ✅ Mega Blog (Appwrite) | Full auth, DB, file upload, Redux | — | — |
 
 ---
